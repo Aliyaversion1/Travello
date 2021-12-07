@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+
+
+          <!-- Main -->
+<!--            <div id="main">-->
+
+              <!-- Post -->
+                <!-- <article class="post">
+                  <header>
+                    <div class="title">
+                      <h2><a href="#">{{ category }}</a></h2>
+                    </div>
+                                        <-- Main -->
+            <div id="main">
+
+              <!-- Post -->
+                <article class="post">
+                  <header>
+                    <div class="title">
+                      <h2>{{ post.title }}</h2>
+
+                        {% if request.user.is_authenticated %}
+                        {% if fav %}
+                        <div>
+                            <a href="{% url 'favourite-list' %}">Remove Favourities</a>
+                        </div>
+
+                        {% else %}
+                        <a href="{% url 'favourite-add' post.id %}" ><i class="fas fa-star"></i></a>
+                        {% endif %}
+                        {% endif %}
+
+                      {% if request.user.is_authenticated %}
+
+                      <a href="{% url 'update-post' post.id %}"><i class="far fa-edit"></i></a>
+                      <a href="{% url 'delete-post' post.id %}"><i class="far fa-trash-alt"></i></a>
+
+                      {% else %}
+                      <a href="{% url 'login' %}" ><i class="fas fa-bookmark"></i></a>
+                      <a href="{% url 'update-post' post.id %}"><i class="far fa-edit"></i></a>
+                      <a href="{% url 'delete-post' post.id %}"><i class="far fa-trash-alt"></i></a>
+
+                    {% endif %}
+
+                    </div>
+                    <div class="meta">
+
+                      <p>{{ post.created }}</p>
+                      <a href="#" class="author"><span class="name">{{ post.user }}</span><img src="images/avatar.jpg" alt="" /></a>
+                    </div>
+                  </header>
+                    {% if post.get_image %}
+                  <span class="image featured"><img style="width: 550px; height: 600px; margin-left: 270px; " src="{{ post.get_image }}" /></span>
+                    {% endif %}
+
+                  <p>{{ post.description }}</p>
+
+
+                                    {% for img in images %}
+                                    {% if img.image %}
+                                    <img style="width: 550px; height: 600px; margin-left: 25px; margin-top: 10px" src="{{ img }}" class="img-thumbnail" alt="...">
+                                    {% endif %}
+                                    {% endfor %}
+<<<<<<< HEAD
+                    <div>
+      <h4>Comments</h4>
+{% for comm in comment %}
+{{ comm.user }}<br>
+{{ comm.comment }}<br><br>
+{% endfor %}
+<p>
+    <form action="" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Send comment">
+</form>
+</div>
+                </article>
+            </div>
+
+=======
+
+                  <!-- <footer>
+                    <ul class="stats">
+                      <li><a href="#">General</a></li>
+                      <li><a href="#" class="icon solid fa-heart">28</a></li>
+                      <li><a href="#" class="icon solid fa-comment">128</a></li>
+                    </ul>
+                  </footer>
+                </article>
+
+            </div>
+
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+          {% if not category.get_children %}
+                    {% for child in category.get_children %}
+              <div class="col" id="">
+                <div class="card">
+                  <img src="{{ child.image.url }}" class="card-img-top" alt="...">
+                  <div class="card-body">
+            <a href="{% url 'category' category.slug %}"><h5 class="card-title">{{ child.name }}</h5></a>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  </div>
+                </div>
+          {% endfor %}
+                   {% endif %}
+          </div>
+          <br>
+
+
+
+<!-- Mini Posts -->
+<section>
+  <div class="mini-posts">
+    {% if not category.get_children %}
+    {% for post in posts %}
+    <!-- Mini Post -->
+    <article class="mini-post" style="margin-top: auto; margin-bottom: auto;">
+      <header>
+        <h3><a href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h3>
+        <p>{{ post.description|truncatewords:10 }}</p>
+
+        <time class="published" datetime="2015-10-20">{{ post.create }}</time>
+        <a href="#" class="author"><img style="width: 250px; :" src="{{ post.get_image }}" alt=""/></a>
+      </header>
+      <a href="single.html" class="image"><img src="images/pic04.jpg" alt=""/></a>
+    </article>
+    {% endfor %}
+    {% endif %}
+    <br><br>
+    <h2>Comments</h2>
+
+      <br/>
+       {% for comm in comment.all %}
+        <br/><br/>
+      <strong>
+        {{ comm.user }}
+      </strong>
+        {{ comm.created }}
+      <br/>
+      {{ comm.text }}
+      <br/>
+      {% endfor %}
+                 {% if user.is_authenticated %}
+                  <div class="col-md-8 card mb-4  mt-3 ">
+                    <div class="card-body">
+                      {% if new_comment %}
+                      <div class="alert alert-success" role="alert">
+                        Your comment is added
+                      </div>
+                      {% else %}
+                      <h3>Leave a comment</h3>
+    <p>
+      <form action="" method="post">
+        {% csrf_token %}
+        {{ form }}
+    <input type="submit" value="Send">
+      </form
+    </p>
+                      {% endif %}
+                    </div>
+                  </div>
+                  {% endif %}
+            </div>
+>>>>>>> 15f0df38fd07d32ef2f744e0bf1b55f2d8025b45
+
+
+
+  <hr>
+  <br/><br/>
+
+
+    <form action="{% url 'like_post' post.id %}" method="POST">
+  {% csrf_token %}
+  {{ post.get_total_likes }} <button type="submit" name='post_id' value="{{ post.id }}"><i class="fas fa-heart"></i></button>
+    </form>
+
+
+</section>
+
+
+
+
+{% endblock %}

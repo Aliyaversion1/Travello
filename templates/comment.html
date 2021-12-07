@@ -1,0 +1,59 @@
+<<<<<<< HEAD
+<!--{% extends 'base.html' %}-->
+<!--{% block title %}Add comment{% endblock %}-->
+<!--{% block content %}-->
+<!--<br/><br/>-->
+<!--<div class="form-group">-->
+<!--<form style="background-color: #F9E79F; margin: auto;" method="post">-->
+<!--    {% csrf_token %}-->
+<!--    {{ form.as_p }}-->
+<!--    <button type="submit">Add comment</button>-->
+<!--</form>-->
+<!--</div>-->
+<!--{% endblock %}-->
+=======
+{% extends 'post-detail.html' %}
+{% block title %}Add comment{% endblock %}
+{% block content %}
+<br/><br/>
+<p>
+    <h2>Comments</h2>
+      <br/>
+      {% if not post.comment.all %}
+      No Comments yet...
+        <br/><br/>
+        <a href="{% url 'comment' post.id %}">Add Comment</a>
+        <br/><br/>
+      {% else %}
+      <a href="{% url 'comment' post.id %}">Add Comment</a>
+        {% endif %}
+
+
+      {% if not comm.user.is_authenticated %}
+      <br/><br/>
+      {% for comm in comment.all %}
+        <br/><br/>
+      <strong>
+        {{ comm.user }}
+      </strong>
+        {{ comm.created }}
+      <br/>
+
+      {{ comm.text }}
+      <br/>
+
+      {% endfor %}
+      {% endif %}
+      <form action="" method="post">
+          {% csrf_token %}
+          {{ form }}
+          <input type="submit" value="Send">
+      </form>
+</p>
+{% endblock %}
+>>>>>>> 15f0df38fd07d32ef2f744e0bf1b55f2d8025b45
+
+
+
+
+

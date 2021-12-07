@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<body>
+<form method="post" enctype="multipart/form-data" style="background-color: #FDEBD0;">
+    {% csrf_token %}
+    {{ post_form.as_p }}
+    {{ formset.management_form }}
+    {% for form in formset %}
+    {{ form }}
+    {% endfor %}
+    <input class="btn btn-primary" type="submit" value="Submit">
+</form>
+<form method="post" style="margin-top: 1.3em;">
+                        {{ form.as_p  }}
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-danger">Submit</button>
+                      </form>
+</body>
+{% endblock %}
+
+
+

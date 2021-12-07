@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+	<body class="is-preload">
+
+
+
+				<!-- Main -->
+					<div id="main">
+	{% if messages %}
+								<ul class="messages">
+    							{% for message in messages %}
+    							<div class="alert alert-warning" role="alert">{{ message }}</div>
+    								{% endfor %}
+								</ul>
+								{% endif %}
+						<!-- Post -->
+<!--						{% for post in posts %}-->
+<!--							<article class="post">-->
+<!--								<header>-->
+
+<!--									<div class="title">-->
+<!--										<h2><a href="single.html">{{ post.title }}</a></h2>-->
+<!--										<p>This is hachathon project</p>-->
+<!--									</div>-->
+<!--									<div class="meta">-->
+<!--										<p>{{ post.created }}</p>-->
+<!--										<a href="#" class="author"><span class="name">Jane Doe</span><img src="" alt="" /></a>-->
+<!--									</div>-->
+<!--								</header>-->
+
+
+
+<!--								<a href="single.html" class="image featured"><img src="" alt="" /></a>-->
+<!--								<img style="width: 250px; height: 300px;" src="{{ post.get_image }}" alt="" />-->
+<!--								<p>{{ post.description }}</p>-->
+<!--								<footer>-->
+
+<!--									<ul class="actions">-->
+
+<!--										<li><a href="" class="button large">Learn more</a></li>-->
+<!--									</ul>-->
+
+<!--									<ul class="stats">-->
+<!--										<li><a href="#">General</a></li>-->
+<!--										<li><a href="#" class="icon solid fa-heart">28</a></li>-->
+<!--										<li><a href="#" class="icon solid fa-comment">128</a></li>-->
+<!--									</ul>-->
+<!--								</footer>-->
+
+<!--							</article>-->
+<!--							{% endfor %}-->
+
+						<!-- Post -->
+<!--							<article class="post">-->
+<!--								<header>-->
+<!--									<div class="title">-->
+<!--										<h2><a href="single.html">Ultricies sed magna euismod enim vitae gravida</a></h2>-->
+<!--										<p>Lorem ipsum dolor amet nullam consequat etiam feugiat</p>-->
+<!--									</div>-->
+<!--									<div class="meta">-->
+<!--										<time class="published" datetime="2015-10-25">October 25, 2015</time>-->
+<!--										<a href="#" class="author"><span class="name">Jane Doe</span><img src="images/avatar.jpg" alt="" /></a>-->
+<!--									</div>-->
+<!--								</header>-->
+<!--								<a href="single.html" class="image featured"><img src="" alt="" /></a>-->
+<!--								<p>Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper.</p>-->
+<!--								<footer>-->
+<!--									<ul class="actions">-->
+<!--										<li><a href="single.html" class="button large">Continue Reading</a></li>-->
+<!--									</ul>-->
+<!--									<ul class="stats">-->
+<!--										<li><a href="#">General</a></li>-->
+<!--										<li><a href="#" class="icon solid fa-heart">28</a></li>-->
+<!--										<li><a href="#" class="icon solid fa-comment">128</a></li>-->
+<!--									</ul>-->
+<!--								</footer>-->
+<!--							</article>-->
+
+						<!-- Post -->
+						{% for post in page_obj %}
+						<article class="post">
+
+							<header>
+
+
+								<div class="title">
+									<h2><a href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+								</div>
+								<div class="meta">
+									<p>{{ post.created }}</p>
+									{% if post.user %}
+
+									{% if post.user.image %}
+									<a style="text-decoration: none;" href="" class="author"><span class="name">{{ post.user }}</span><img src="{{ post.user.image.url }}" alt="" /></a>
+									{% endif %}
+									{% endif %}
+								</div>
+
+
+							</header>
+
+
+							{% if post.get_image %}
+							<a href="{% url 'post-detail' post.id %}" class="image featured"><img style="width: 550px; height: 650px;" src="{{ post.get_image }}" alt="" /></a>
+							{% endif %}
+							<p>{{ post.description|truncatewords:25 }}</p>
+							<footer>
+								<ul class="actions">
+									<li><a href="{% url 'post-detail' post.id %}" class="button large">Continue Reading</a></li>
+								</ul>
+
+							</footer>
+
+						</article>
+
+						{% endfor %}
+
+
+
+						<!-- Pagination -->
+							<ul class="actions pagination">
+								{% if page_obj.has_previous %}
+								<li><a href="{% url 'homepage' %}?page={{ page_obj.previous_page_number }}" class="button large previous">{{ page_obj.previous_page_number }}</a></li>
+								{% endif %}
+								<li><a href="{% url 'homepage' %}?page={{ page_obj.page_number }}" class="button large next">{{ page_obj.page_number }}</a></li>
+								{% if page_obj.has_next %}
+								<li><a href="{% url 'homepage' %}?page={{ page_obj.next_page_number }}" class="button large next">{{ page_obj.next_page_number }}</a></li>
+								{% endif %}
+							</ul>
+
+					</div>
+
+				<!-- Sidebar -->
+					<section id="sidebar">
+
+						<!-- Intro -->
+							<section id="intro">
+								<a href="#" class="logo"><img src="images/logo.jpg" alt="" /></a>
+								<header>
+									<h2>Travello</h2>
+									<p>Traveling - it leaves you speechless, then turns you into a storyteller.</p>
+								</header>
+							</section>
+
+<!-- Mini Posts -->
+						<section id="intro">
+								<a href="#" class="logo"><img src="images/logo.jpg" alt="" /></a>
+								<header>
+									<article class="mini-post">
+											<header>
+												 <a style="text-decoration: none;" href="{% url 'homepage' %}?filter=new"><h2>New Posts</h2></a>
+
+											</header>
+										</article>
+
+
+								</header>
+							</section>
+							<section>
+								<div class="mini-posts">
+{% for category in categories %}
+									<!-- Mini Post -->
+										<article class="mini-post">
+											<header>
+												<h3><a href="{% url 'category' category.slug %}">{{ category.name }}</a></h3>
+
+											</header>
+										</article>
+
+{% endfor %}
+
+						<!-- About -->
+							<section class="blurb">
+								<h2>About</h2>
+								<p>Блог о путешествиях, отдыхе и развлечениях. У нас вы найдете ответ на самый главный вопрос: куда и как отправиться отдыхать так, чтобы потом было что вспомнить и о чем рассказать другим. Присоединяйтесь!</p>
+								<ul class="actions">
+									<li><a href="#" class="button">Learn More</a></li>
+								</ul>
+							</section>
+
+			</div>
+
+
+
+	</body>
+</html>
+{% endblock %}

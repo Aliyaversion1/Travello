@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section id="banner" style="width : 75%; left : 20%;">
+    <div class="content">
+        <header>
+            <h1>{{ request.user.username }}</h1>
+        </header>
+        <p>{{ request.user }}</p>
+
+
+    </div>
+    <span class="image object" >
+        {% if user.image %}
+        <img src="{{ request.user.image.url }}" style="width:800px; height: auto;" alt="" />
+        {% endif %}
+        <br>
+        <br>
+        <p>{{ request.user.date_joined }}</p>
+    </span>
+</section>
+
+{% endblock %}

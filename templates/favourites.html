@@ -1,0 +1,42 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for post in posts %}
+
+						<article class="post" style="">
+
+							<header>
+
+
+								<div class="title">
+									<h2><a href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+								</div>
+								<div class="meta">
+									<p>{{ post.created }}</p>
+									{% if post.user %}
+									<a style="text-decoration: none;" href="" class="author"><span class="name">{{ post.user }}</span><img src="{{ post.user.image.url }}" alt="" /></a>
+									{% endif %}
+								</div>
+
+
+							</header>
+
+
+							{% if post.get_image %}
+							<a href="{% url 'post-detail' post.id %}" class="image featured"><img style="width: 550px; height: 650px;" src="{{ post.get_image }}" alt="" /></a>
+							{% endif %}
+							<p>{{ post.description|truncatewords:25 }}</p>
+							<footer>
+								<ul class="actions">
+									<li><a href="{% url 'post-detail' post.id %}" class="button large">Continue Reading</a></li>
+								</ul>
+
+							</footer>
+
+						</article>
+
+						{% endfor %}
+
+{% endblock %}
